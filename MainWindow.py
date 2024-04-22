@@ -9,3 +9,5 @@ class MainWindow(QMainWindow):
         centralWidget = CentralWidget(self)
 
         self.setCentralWidget(centralWidget)
+
+        self.setWindowTitle("Taschenrechner")
