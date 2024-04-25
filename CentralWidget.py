@@ -6,36 +6,51 @@ class CentralWidget(QWidget):
     def __init__(self, parent=None):
         super(CentralWidget, self).__init__(parent)
 
-        self.result = 0
+        self.__result = 0
 
         button_add = QPushButton("+")
-        button_add.released.connect(self.add_value)
-
         button_sub = QPushButton("-")
 
-        self.line_value = QLineEdit()
+        button_add.released.connect(self.add_value)
+        button_sub.released.connect(self.sub_value)
 
-        self.browser_result = QTextBrowser()
+        self.__value = QLineEdit()
+
+        self.__browser = QTextBrowser()
 
         grid_layout = QGridLayout()
 
         grid_layout.addWidget(button_add, 1, 1)
-        grid_layout.addWidget(self.line_value, 1, 2)
+        grid_layout.addWidget(self.__value, 1, 2)
         grid_layout.addWidget(button_sub, 1, 3)
-        grid_layout.addWidget(self.browser_result, 2, 1, 1, 3)
+        grid_layout.addWidget(self.__browser, 2, 1, 1, 3)
 
         self.setLayout(grid_layout)
 
     @pyqtSlot()
     def add_value(self):
-        string = str(self.result)
+        string = str(self.__result)
         string += " + "
 
-        text = self.line_value.text()
+        text = self.__value.text()
         string += text
         string += " = "
 
-        self.result += int(text)
-        string += str(self.result)
+        self.__result += int(text)
+        string += str(self.__result)
 
-        self.browser_result.append(string)
+        self.__browser.append(string)
+
+    @pyqtSlot()
+    def sub_value(self):
+        string = str(self.__result)
+        string += " - "
+
+        text = self.__value.text()
+        string += text
+        string += " = "
+
+        self.__result -= int(text)
+        string += str(self.__result)
+
+        self.__browser.append(string)
